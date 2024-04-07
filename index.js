@@ -1,25 +1,30 @@
 const box = document.querySelectorAll(".drum")
 
+document.addEventListener("keydown", handleKey);
 
 for (let i = 0; i < box.length; i++) {
     box[i].addEventListener("click", handleClcik);
-    // box[i].addEventListener("keydown", handleKey);
-    playSound(this);
 }
 
 
 function handleClcik() {
-    this.classList.add("pressed");
+    playSound(this.innerHTML);
 
-    setTimeout(() => {
-        this.classList.remove("pressed");
-    }, 200);
+    classList(this);
+
+}
+
+function handleKey(event) {
+    const eventKey = document.querySelector("." + event.key);
+
+    playSound(event.key);
+
+    classList(eventKey);
 }
 
 function playSound(event) {
-    let detectButton = event.innerHTML;
 
-    switch (detectButton) {
+    switch (event) {
         case "w":
             let audio = new Audio("./sounds/crash.mp3")
             audio.play();
@@ -50,8 +55,11 @@ function playSound(event) {
             break;
     }
 }
-// function handleKey() {
-//     const keyLetter = this.key;
-//     console.log(keyLetter);
 
-// }
+function classList(event) {
+    event.classList.add("pressed");
+
+    setTimeout(() => {
+        event.classList.remove("pressed");
+    }, 200);
+}
